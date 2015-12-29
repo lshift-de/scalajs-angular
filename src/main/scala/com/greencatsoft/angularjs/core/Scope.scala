@@ -12,6 +12,8 @@ trait Scope extends js.Object {
 
   def $apply(exp: js.Any = null): js.Any = js.native
 
+  def $$phase: Boolean = js.native
+
   def $broadcast(name: String, args: js.Any*): js.Object = js.native
 
   def $destroy(): Unit = js.native

@@ -191,7 +191,7 @@ trait IsolatedScope extends ScopeStrategy {
     super.buildConfig(config)
   }
 
-  abstract class ScopeBinding(val prefix: String) {
+  sealed abstract class ScopeBinding(val prefix: String) {
 
     val name: String
 
@@ -199,6 +199,8 @@ trait IsolatedScope extends ScopeStrategy {
   }
 
   case class UnidirectionalBinding(name: String, attribute: String = "") extends ScopeBinding("=")
+
+  case class OptionalUnidirectionalBinding(name: String, attribute: String = "") extends ScopeBinding("=?")
 
   case class BidirectionalBinding(name: String, attribute: String = "") extends ScopeBinding("@")
 
@@ -211,6 +213,8 @@ trait IsolatedScope extends ScopeStrategy {
     def :@(attribute: String = ""): ScopeBinding = BidirectionalBinding(name, attribute)
 
     def :&(attribute: String = ""): ScopeBinding = BehavioralBinding(name, attribute)
+
+    def :=?(attribute: String = ""): ScopeBinding = OptionalUnidirectionalBinding(name, attribute)
   }
 }
 

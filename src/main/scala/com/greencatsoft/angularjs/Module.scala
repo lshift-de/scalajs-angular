@@ -26,6 +26,16 @@ class Module private[angularjs] (val module: internal.Module) {
     this
   }
 
+  def constant[A <: Constant[_]](target: A): Module = macro angular.constant[A]
+
+  def constant[A <: Constant[_]]: Module = macro angular.constantFromClass[A]
+
+  def $constant(name: String, constructor: js.Array[js.Any]): Module = {
+    module.constant(name, constructor)
+    this
+  }
+
+
   def directive[A <: Directive](target: A): Module = macro angular.directive[A]
 
   def directive[A <: Directive]: Module = macro angular.directiveFromClass[A]
